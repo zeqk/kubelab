@@ -1,8 +1,12 @@
 # KubeLab
 
-## Requeriments
+## Personal challenge
 
-- Multipass https://multipass.run/
+1. Setup vm
+2. Install kind
+3. Deploy some app
+
+
 
 KubeLab
 
