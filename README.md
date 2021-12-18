@@ -4,7 +4,7 @@
 
 1. Setup vm
 2. Install kind
-3. Deploy some app
+3. Setup vm install kind using ansible
 
 
 

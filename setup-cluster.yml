@@ -1,0 +1,4 @@
+---
+  - hosts: hostmachine
+    roles:
+      kubelab-vm
