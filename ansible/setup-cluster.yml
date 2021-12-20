@@ -1,0 +1,17 @@
+﻿---
+
+  - hosts: host_machine
+    vars_prompt:
+      - name: ansible_user
+        prompt: Username
+        private: no      
+      - name: ansible_password
+        prompt: Password
+        private: yes
+    roles:
+      - kubelab-vm
+
+
+  - hosts: kubelab_server
+    roles:
+      - kubelab-vm

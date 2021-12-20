@@ -1,7 +1,0 @@
-all:
-  hosts:
-    hostmachine:
-      ansible_host: 172.20.110.1 #WSL Host
-      ansible_connection: winrm
-      ansible_winrm_server_cert_validation: ignore
-      ansible_winrm_transport: basic

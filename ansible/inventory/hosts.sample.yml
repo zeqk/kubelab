@@ -1,0 +1,11 @@
+all:
+  hosts:
+   host_machine:
+      ansible_host: 172.23.110.1 #WSL
+      ansible_connection: winrm
+      ansible_winrm_server_cert_validation: ignore
+      ansible_winrm_transport: basic
+    kubelab_server:
+      ansible_host: 192.168.0.2
+      ansible_user: admin
+   

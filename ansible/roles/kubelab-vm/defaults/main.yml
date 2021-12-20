@@ -1,0 +1,5 @@
+---
+  kind_cluster_vm_cpus: 2
+  kind_cluster_vm_mem: 2G
+  kind_cluster_vm_disk: 8GB
+  kind_cluster_vm_network: "Ethernet 6"
