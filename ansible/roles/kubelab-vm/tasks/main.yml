@@ -9,17 +9,25 @@
   #   with_items:
   #     - user_key
   #     - user_key.pub
-  - name: Create cloud-init file inserting the public key
-    template:
-      src: cloud-config.yml
-      dest: cloud-init.yaml
+
+  - name: Example from an Ansible Playbook
+    win_ping:
+
+  - name: Getting public key
     delegate_to: localhost
-    vars:
-      public_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+    set_fact:
+      public_key: "cat {{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+
+  - name: Create cloud-init file inserting the public key
+    win_template:
+      src: kubelab-cloud-init.yaml
+      dest: "C:/Users/{{ ansible_user }}/kubelab-cloud-init.yaml"
+    # vars:
+    #   public_key: "{{ pub_key }}"
 
   - name: Create new VM
-    shell: multipass launch --name kubelab --cloud-init cloud-init.yaml --cpus {{ kind_cluster_vm_cpus }} --mem {{ kind_cluster_vm_mem }} --disk {{ kind_cluster_vm_disk }} --network {{ kind_cluster_vm_network }}
+    win_shell: "multipass launch --name kubelab --cloud-init C:/Users/{{ ansible_user }}/kubelab-cloud-init.yaml --cpus {{ kind_cluster_vm_cpus }} --mem {{ kind_cluster_vm_mem }} --disk {{ kind_cluster_vm_disk }} --network '{{ kind_cluster_vm_network }}'"
     
 
   - name: Example from an Ansible Playbook
-    ping:
+    win_ping:

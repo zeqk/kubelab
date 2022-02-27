@@ -1,6 +1,6 @@
 ﻿---
 
-  - hosts: host_machine
+  - hosts: host-machine
     vars_prompt:
       - name: ansible_user
         prompt: Username
@@ -12,6 +12,6 @@
       - kubelab-vm
 
 
-  - hosts: kubelab_server
-    roles:
-      - kubelab-vm
+  # - hosts: kubelab-vm
+  #   roles:
+  #     - kubelab-vm
