@@ -28,6 +28,19 @@
       src: "opt/kind/kind-cluster.yml"
       dest: "/opt/kind/kind-cluster.yml"
       mode: "755"
+    register: config_result
+
+  - name: set recreate cluster  fact
+    set_fact:
+      recreate_cluster: cluster_check_result.exists and config_result.changed
+
+  - name: "Delete KinD Cluster"
+    command:
+      argv:
+        - kind delete cluster --name kind-cluster
+    register: kind_cluster_result
+    when: recreate_cluster
+
 
   - name: "Start KinD Cluster"
     command:
@@ -38,4 +51,8 @@
         - --name=kind-cluster
         - --config=/opt/kind/kind-cluster.yml
     register: kind_cluster_result
-    when: (not cluster_check_result.exists)
+    when: (not cluster_check_result.exists or recreate_cluster)
+
+  - name: Start KinD Cluster output
+    debug:
+      var: kind_cluster_result
