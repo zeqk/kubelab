@@ -30,7 +30,7 @@
       mode: "755"
     register: config_result
 
-  - name: set recreate cluster  fact
+  - name: set recreate cluster fact
     set_fact:
       recreate_cluster: cluster_check_result.exists and config_result.changed
 
@@ -41,18 +41,14 @@
     register: kind_cluster_result
     when: recreate_cluster
 
-
   - name: "Start KinD Cluster"
-    command:
-      argv:
-        - kind
-        - create
-        - cluster
-        - --name=kind-cluster
-        - --config=/opt/kind/kind-cluster.yml
+    shell: kind create cluster --name=kind-cluster --config=/opt/kind/kind-cluster.yml
     register: kind_cluster_result
     when: (not cluster_check_result.exists or recreate_cluster)
 
   - name: Start KinD Cluster output
     debug:
       var: kind_cluster_result
+
+  - debug: 
+      msg: "{{lookup('file', '~/.kube/config') }}"
