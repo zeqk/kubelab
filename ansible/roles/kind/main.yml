@@ -17,7 +17,7 @@
       url: https://api.github.com/repos/kubernetes-sigs/kind/releases/latest
       return_content: yes
     register: kind_release
-    when: kind_not_installed and kind_version is not defined 
+    when: kind_not_installed
 
   - name: Set KinD version
     set_fact:
