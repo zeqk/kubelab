@@ -22,9 +22,9 @@ runcmd:
   - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
   - sed -i -e '$aAllowUsers kubelabadmin ubuntu' /etc/ssh/sshd_config
   - /etc/init.d/ssh restart
-  - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
-  - chmod +x ./kind
-  - sudo mv ./kind /usr/local/bin
+  # - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+  # - chmod +x ./kind
+  # - sudo mv ./kind /usr/local/bin
 
 users:
     - default
