@@ -1,0 +1,47 @@
+---
+  - name: Check if KinD is installed
+    command:
+      argv:
+        - kind
+        - version
+    register: kind_result
+    ignore_errors: True
+    changed_when: False
+
+  - name: set kind is installed fact
+    set_fact:
+      kind_not_installed: kind_result.rc != 0
+
+  - name: Get latest KinD release
+    uri:
+      url: https://api.github.com/repos/kubernetes-sigs/kind/releases/latest
+      return_content: yes
+    register: kind_release
+    when: kind_not_installed and kind_version is not defined 
+
+  - name: Set KinD version
+    set_fact:
+      kind_version: "{{ kind_release.json.tag_name }}"
+    when: kind_not_installed and kind_version is not defined
+
+  - name: Set KinD Linux download binary
+    set_fact:
+        kind_download_binary: "https://github.com/kubernetes-sigs/kind/releases/download/{{ kind_version }}/kind-linux-amd64"
+    when: kind_not_installed and (ansible_os_family == "RedHat" or ansible_os_family == "CentOS" or ansible_os_family == "Debian")
+
+  - name: Create user local bin directory
+    file:
+      path: /usr/local/bin
+      state: directory
+    become: yes
+    become_user: root
+    when: kind_not_installed
+
+  - name: Download KinD binary
+    get_url:
+      url: "{{ kind_download_binary }}"
+      dest: "/usr/local/bin/kind"
+      mode: "0755"
+    become: yes
+    when: kind_not_installed
+    register: downloaded_kind
