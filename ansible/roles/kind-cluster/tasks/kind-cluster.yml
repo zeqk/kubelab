@@ -1,0 +1,28 @@
+---
+  - name: "Check if kind-cluster already exists"
+    docker_container_info:
+      name: "kind-cluster"
+    register: cluster_check_result
+
+  - name: Create KinD Config dir
+    file:
+      state: directory
+      name: "/opt/kind"
+
+  - name: Create KinD Config
+    template:
+      src: "opt/kind/kind-cluster.yml"
+      dest: "/opt/kind/kind-cluster.yml"
+      mode: "755"
+    when: kind_create_config
+
+  - name: "Start KinD Cluster"
+    command:
+      argv:
+        - kind
+        - create
+        - cluster
+        - --name=kind-cluster
+        - --config=/opt/kind/kind-cluster.yml
+    register: kind_cluster_result
+    when: (not cluster_check_result.exists)

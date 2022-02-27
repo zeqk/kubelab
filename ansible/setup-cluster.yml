@@ -7,3 +7,4 @@
         private: no
     roles:
       - kind
+      - kind-cluster
