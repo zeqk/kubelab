@@ -6,7 +6,7 @@ multipass stop kubelab
 Write-Host "Deleting Kubelab VM..."
 multipass delete kubelab
 
-Write-Host "Puring multipass..."
+Write-Host "Purging multipass..."
 multipass purge
 
 multipass list --format yaml
