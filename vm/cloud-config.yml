@@ -19,6 +19,9 @@ packages:
 
 # https://kind.sigs.k8s.io/docs/user/quick-start/#installation
 runcmd:
+  - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  - sed -i -e '$aAllowUsers kubelabadmin ubuntu' /etc/ssh/sshd_config
+  - /etc/init.d/ssh restart
   - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
   - chmod +x ./kind
   - sudo mv ./kind /usr/local/bin
@@ -27,6 +30,13 @@ users:
     - default
     - name: kubelabadmin
       plain_text_passwd: 123456
+      sudo: ALL=(ALL) NOPASSWD:ALL
+      shell: /bin/bash
+      groups: users,docker
+      lock_passwd: false
+      ssh_pwauth: true
+      chpasswd: { expire: false }
+
   
 # Add default auto created user to docker group
 system_info:
