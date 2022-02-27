@@ -1,17 +1,9 @@
 ﻿---
 
-  - hosts: host-machine
+  - hosts: kubelab_server
     vars_prompt:
-      - name: ansible_user
-        prompt: Username
-        private: no      
-      - name: ansible_password
-        prompt: Password
-        private: yes
+      - name: ansible_host
+        prompt: VM ip
+        private: no
     roles:
-      - kubelab-vm
-
-
-  # - hosts: kubelab-vm
-  #   roles:
-  #     - kubelab-vm
+      - kind
