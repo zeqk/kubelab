@@ -5,7 +5,7 @@ multipass launch 20.04 `
     --cloud-init cloud-config.yml `
     --cpus 2 `
     --mem 2G `
-    --disk 8G `
+    --disk 16G `
     --verbose
 
 # Configure Network for interconect WSL2 to this VM
