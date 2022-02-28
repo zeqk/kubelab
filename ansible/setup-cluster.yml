@@ -3,7 +3,7 @@
   - hosts: kubelab_server
     vars_prompt:
       - name: ansible_host
-        prompt: VM ip
+        prompt: Kubelab VM IP
         private: no
     roles:
       - kind
